@@ -1,19 +1,23 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import SidebarComponent from "./components/Sidebar";
+import Dashboard from "./pages/Dashboard";
+import "./css/style.css";
+
+import "./charts/ChartjsConfig";
+
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <div className="font-bold">Hello world!</div>,
+      element: <Dashboard />,
     },
     {
       path: "/2",
       element: <div className="font-bold">Hello world!2</div>,
     },
   ]);
+
   return (
     <div className="App flex flex-row">
-      <SidebarComponent />
       <RouterProvider router={router} />
     </div>
   );
