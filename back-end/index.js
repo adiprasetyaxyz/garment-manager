@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const productRoute = require("./routes/product.route");
+const materialRoute = require("./routes/material.route");
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/products", productRoute);
+app.use("/api/materials", materialRoute);
 
 app.get("/", (req, res) => {
   res.send("hello world!");

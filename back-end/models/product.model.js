@@ -1,24 +1,84 @@
 const mongoose = require("mongoose");
 
-const ProductSchema = mongoose.Schema(
+const SizeSchema = new mongoose.Schema({
+  S: {
+    stock: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    sold: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+  },
+  M: {
+    stock: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    sold: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+  },
+  L: {
+    stock: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    sold: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+  },
+  XL: {
+    stock: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    sold: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+  },
+});
+const ColorSchema = new mongoose.Schema({
+  color: {
+    type: String,
+    required: true,
+  },
+  sizes: {
+    type: SizeSchema,
+    required: true,
+  },
+});
+const StockSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      require: [true, " Please enter product name"],
+      required: [true, "Please enter the garment name"],
     },
-    quantity: {
-      type: Number,
-      require: true,
-      default: 0,
-    },
-    image: {
+    fabric_type: {
       type: String,
-      require: false,
+      required: [true, "Please enter the fabric type"],
     },
     price: {
       type: Number,
-      require: true,
+      required: [true, "Please enter the fabric price per meter"],
       default: 0,
+    },
+    colors: [ColorSchema],
+    image: {
+      type: String,
+      required: false,
     },
   },
   {
@@ -26,5 +86,5 @@ const ProductSchema = mongoose.Schema(
   }
 );
 
-const Product = mongoose.model("Product", ProductSchema);
+const Product = mongoose.model("ProductStock", StockSchema);
 module.exports = Product;

@@ -5,10 +5,12 @@ const {
   getProductById,
   deleteProduct,
   updateProducts,
+  soldProduct,
 } = require("../controler/product.controler");
 const router = express.Router();
 
 router.post("/", createProduct);
+router.post("/sold", soldProduct);
 router.get("/", getAllProducts);
 router.get("/:id", getProductById);
 router.delete("/:id", deleteProduct);

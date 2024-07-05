@@ -52,10 +52,41 @@ const deleteProduct = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+const soldProduct = async (req, res) => {
+  const { id, color, size, quantity } = req.body;
+
+  try {
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({ message: "Stock not found" });
+    }
+
+    const colorObj = product.colors.find((c) => c.color === color);
+
+    if (!colorObj) {
+      return res.status(404).json({ message: "Color not found" });
+    }
+
+    if (colorObj.sizes[size].stock < quantity) {
+      return res.status(400).json({ message: "Not enough stock" });
+    }
+
+    colorObj.sizes[size].stock -= quantity;
+    colorObj.sizes[size].sold += quantity;
+
+    await product.save();
+
+    res.status(200).json(product);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
 module.exports = {
   createProduct,
   getAllProducts,
   getProductById,
   updateProducts,
   deleteProduct,
+  soldProduct,
 };
