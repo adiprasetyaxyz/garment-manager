@@ -9,7 +9,7 @@ const SizeSchema = new mongoose.Schema({
     },
     sold: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
     },
   },
@@ -21,7 +21,7 @@ const SizeSchema = new mongoose.Schema({
     },
     sold: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
     },
   },
@@ -33,7 +33,7 @@ const SizeSchema = new mongoose.Schema({
     },
     sold: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
     },
   },
@@ -45,7 +45,7 @@ const SizeSchema = new mongoose.Schema({
     },
     sold: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
     },
   },
@@ -53,11 +53,11 @@ const SizeSchema = new mongoose.Schema({
 const ColorSchema = new mongoose.Schema({
   color: {
     type: String,
-    required: true,
+    required: false,
   },
   sizes: {
     type: SizeSchema,
-    required: true,
+    required: false,
   },
 });
 const StockSchema = new mongoose.Schema(

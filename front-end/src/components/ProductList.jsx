@@ -1,8 +1,32 @@
 import React, { useEffect, useState } from "react";
 import CONFIG from "../script/config";
 import ProductItem from "./ProductItem";
+import AddProductForm from "./AddProductForm";
 
 export default function ProductList() {
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const toggleAddForm = (product) => {
+    setShowAddForm(!showAddForm);
+    setSelectedProduct(product);
+  };
+
+  const handleChange = (updatedProduct) => {
+    const updatedProducts = productStock.map((product) =>
+      product._id === updatedProduct._id ? updatedProduct : product
+    );
+    setProductStock(updatedProducts);
+    setShowAddForm(false);
+  };
+
+  const handleCloseForm = () => {
+    setShowAddForm(false);
+    setSelectedProduct(null);
+    setTimeout(() => {
+      window.location.reload(); // Refresh the page after successful deletion
+    }, 500);
+  };
   const [productStock, setProductStock] = useState([]);
   useEffect(() => {
     async function fetchProductStock() {
@@ -21,7 +45,12 @@ export default function ProductList() {
   }, []);
   return (
     <div>
-      <h1>Product List</h1>
+      <button
+        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4"
+        onClick={() => toggleAddForm({ colors: [] })}
+      >
+        Tambah Product
+      </button>
       {productStock.length === 0 ? (
         <p>No products available</p>
       ) : (
@@ -31,6 +60,13 @@ export default function ProductList() {
             setProductStock={setProductStock}
           />
         </ul>
+      )}{" "}
+      {showAddForm && (
+        <AddProductForm
+          selectedProduct={selectedProduct}
+          handleCloseForm={handleCloseForm}
+          handleChange={handleChange}
+        />
       )}
     </div>
   );
