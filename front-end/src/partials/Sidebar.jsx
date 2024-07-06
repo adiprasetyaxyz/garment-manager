@@ -400,8 +400,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }}
               </SidebarLinkGroup>
 
-              {/* Tasks */}
-              <SidebarLinkGroup activecondition={pathname.includes("tasks")}>
+              {/* Product */}
+              <SidebarLinkGroup activecondition={pathname.includes("product")}>
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
@@ -451,7 +451,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               />
                             </svg>
                             <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                              Tasks
+                              Product
                             </span>
                           </div>
                           {/* Icon */}
@@ -472,7 +472,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="/tasks/kanban"
+                              to="/products"
                               className={({ isActive }) =>
                                 "block transition duration-150 truncate " +
                                 (isActive
@@ -481,7 +481,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               }
                             >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Kanban
+                                Product Stock
                               </span>
                             </NavLink>
                           </li>

@@ -3,21 +3,31 @@ import Dashboard from "./pages/Dashboard";
 import "./css/style.css";
 
 import "./charts/ChartjsConfig";
+import ProductStock from "./pages/ProductStock";
+import MainLayout from "./pages/MainLayouts";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Dashboard />,
+      element: (
+        <MainLayout>
+          <Dashboard />
+        </MainLayout>
+      ),
     },
     {
-      path: "/2",
-      element: <div className="font-bold">Hello world!2</div>,
+      path: "/products",
+      element: (
+        <MainLayout>
+          <ProductStock />
+        </MainLayout>
+      ),
     },
   ]);
 
   return (
-    <div className="App flex flex-row">
+    <div className="App">
       <RouterProvider router={router} />
     </div>
   );
