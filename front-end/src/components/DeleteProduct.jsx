@@ -27,7 +27,7 @@ export default function DeleteProduct({ productId }) {
       setSuccess(true);
       setTimeout(() => {
         window.location.reload(); // Refresh the page after successful deletion
-      }, 2000); // Adjust the timeout as needed
+      }, 500); // Adjust the timeout as needed
     } catch (error) {
       setError(error.message || "Failed to delete product. Please try again.");
     } finally {

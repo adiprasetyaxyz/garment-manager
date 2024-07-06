@@ -1,7 +1,32 @@
 import React, { useState } from "react";
 import DeleteProduct from "./DeleteProduct";
+import AddProductForm from "./AddProductForm";
+import UpdateProductForm from "./UpdateProductForm";
 
 export default function ProductItem({ productStock, setProductStock }) {
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const toggleAddForm = (product) => {
+    setShowAddForm(!showAddForm);
+    setSelectedProduct(product);
+  };
+
+  const handleChange = (updatedProduct) => {
+    const updatedProducts = productStock.map((product) =>
+      product._id === updatedProduct._id ? updatedProduct : product
+    );
+    setProductStock(updatedProducts);
+    setShowAddForm(false);
+  };
+
+  const handleCloseForm = () => {
+    setShowAddForm(false);
+    setSelectedProduct(null);
+    setTimeout(() => {
+      window.location.reload(); // Refresh the page after successful deletion
+    }, 500);
+  };
   return (
     <div>
       <div className="max-w-4xl mx-auto">
@@ -48,7 +73,23 @@ export default function ProductItem({ productStock, setProductStock }) {
                   </div>
                 ))}
               </div>
-              <DeleteProduct productId={product._id} />
+              <div>
+                <DeleteProduct productId={product._id} />
+                {showAddForm && (
+                  <UpdateProductForm
+                    selectedProduct={selectedProduct}
+                    handleCloseForm={handleCloseForm}
+                    handleChange={handleChange}
+                    products={product}
+                  />
+                )}
+                <button
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4"
+                  onClick={() => toggleAddForm({ colors: [] })}
+                >
+                  Update Product
+                </button>
+              </div>
             </li>
           ))}
         </ul>
