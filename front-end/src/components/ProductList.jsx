@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CONFIG from "../script/config";
 import ProductItem from "./ProductItem";
 import AddProductForm from "./AddProductForm";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 export default function ProductList() {
   const [showAddForm, setShowAddForm] = useState(false);
@@ -23,9 +24,6 @@ export default function ProductList() {
   const handleCloseForm = () => {
     setShowAddForm(false);
     setSelectedProduct(null);
-    setTimeout(() => {
-      window.location.reload(); // Refresh the page after successful deletion
-    }, 500);
   };
   const [productStock, setProductStock] = useState([]);
   useEffect(() => {
@@ -45,12 +43,10 @@ export default function ProductList() {
   }, []);
   return (
     <div>
-      <button
-        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4"
+      <AddCircleIcon
+        className="text-xl text-blue-950"
         onClick={() => toggleAddForm({ colors: [] })}
-      >
-        Tambah Product
-      </button>
+      ></AddCircleIcon>
       {productStock.length === 0 ? (
         <p>No products available</p>
       ) : (

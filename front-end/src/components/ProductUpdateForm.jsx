@@ -26,7 +26,8 @@ function ProductUpdateForm({ products }) {
       });
 
       const data = await response.json();
-      console.log(product);
+      window.location.reload(); // Refresh the page after successful deletion
+
       if (!response.ok) {
         throw new Error(data.message || "Failed to update product");
       }

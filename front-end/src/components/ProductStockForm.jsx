@@ -48,6 +48,8 @@ function ProductForm() {
 
       console.log("Product successfully added:", data);
       setProduct(initialProductState);
+
+      window.location.reload(); // Refresh the page after successful deletion
     } catch (error) {
       setError(error.message || "Failed to add product. Please try again.");
       console.error("Error adding product:", error);
