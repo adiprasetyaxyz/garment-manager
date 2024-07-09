@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CONFIG from "../script/config";
 import FabricForm from "../components/materials/FabricForm";
 import FabricStockItem from "../components/materials/fabricStockItem";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function FabricStock() {
   const [fabricStock, setFabricStock] = useState([]);
@@ -62,7 +63,7 @@ export default function FabricStock() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data), // Send updated fabric data without _id
+        body: JSON.stringify(data),
       });
 
       const responseData = await response.json();
@@ -77,6 +78,7 @@ export default function FabricStock() {
       setFabricStock((prevStock) =>
         prevStock.map((fabric) => (fabric._id === _id ? responseData : fabric))
       );
+      window.location.reload();
     } catch (error) {
       console.error("Error updating product:", error);
     }
@@ -94,12 +96,10 @@ export default function FabricStock() {
       {showForm && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg relative">
-            <button
+            <CloseIcon
               onClick={toggleForm}
-              className="absolute top-0 right-0 m-4 text-gray-500 hover:text-gray-700"
-            >
-              Close
-            </button>
+              className="absolute hover:cursor-pointer top-0 right-0 m-4 text-gray-500 hover:text-gray-700"
+            ></CloseIcon>
             <FabricForm onSubmit={handleFormSubmit} />
           </div>
         </div>

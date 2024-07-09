@@ -75,6 +75,14 @@ const StockSchema = new mongoose.Schema(
       required: [true, "Please enter the fabric price per meter"],
       default: 0,
     },
+    total_stock: {
+      type: Number,
+      default: 0,
+    },
+    total_sold: {
+      type: Number,
+      default: 0,
+    },
     colors: [ColorSchema],
     image: {
       type: String,

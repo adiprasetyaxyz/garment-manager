@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import CONFIG from "../../script/config";
 import UpdateFabricForm from "./UpdateFabricForm";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function FabricStockItem({
   fabricStock,
@@ -84,18 +87,14 @@ export default function FabricStockItem({
                 ))}
               </div>
               <div className="mt-4 flex justify-end">
-                <button
+                <EditIcon
                   onClick={() => handleUpdate(fabric._id)}
-                  className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2 focus:outline-none focus:shadow-outline"
-                >
-                  Update
-                </button>
-                <button
+                  className="hover:cursor-pointer"
+                ></EditIcon>
+                <DeleteOutlineIcon
                   onClick={() => handleDelete(fabric._id)}
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Delete
-                </button>
+                  className="hover:cursor-pointer"
+                ></DeleteOutlineIcon>
               </div>
             </div>
           </div>
@@ -104,12 +103,10 @@ export default function FabricStockItem({
       {showUpdateForm && fabricToUpdate && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg relative">
-            <button
+            <CloseIcon
               onClick={handleCloseForm}
-              className="absolute top-0 right-0 m-4 text-gray-500 hover:text-gray-700"
-            >
-              Close
-            </button>
+              className="hover:cursor-pointer absolute top-0 right-0 m-4 text-gray-500 hover:text-gray-700"
+            ></CloseIcon>
             <UpdateFabricForm
               onSubmit={handleUpdateFormSubmit}
               initialData={fabricToUpdate}

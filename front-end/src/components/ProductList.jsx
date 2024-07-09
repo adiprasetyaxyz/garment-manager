@@ -26,6 +26,7 @@ export default function ProductList() {
     setSelectedProduct(null);
   };
   const [productStock, setProductStock] = useState([]);
+  const [totalSold, setTotalSold] = useState([]);
   useEffect(() => {
     async function fetchProductStock() {
       try {

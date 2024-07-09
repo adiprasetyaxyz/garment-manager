@@ -56,10 +56,10 @@ function ProductUpdateForm({ products }) {
     setProduct({ ...product, colors: newColors });
   };
 
-  const handleSizeChange = (index, size, e) => {
+  const handleSizeChange = (index, size, e, field) => {
     const { value } = e.target;
     const newColors = [...product.colors];
-    newColors[index].sizes[size].stock = value;
+    newColors[index].sizes[size][field] = value;
     setProduct({ ...product, colors: newColors });
   };
 
@@ -151,7 +151,17 @@ function ProductUpdateForm({ products }) {
                 <input
                   type="text"
                   value={colorObj.sizes[size].stock}
-                  onChange={(e) => handleSizeChange(index, size, e)}
+                  onChange={(e) => handleSizeChange(index, size, e, "stock")}
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  required
+                />
+                <label className="block text-sm font-medium text-gray-700">
+                  Size {size} sold:
+                </label>
+                <input
+                  type="text"
+                  value={colorObj.sizes[size].sold}
+                  onChange={(e) => handleSizeChange(index, size, e, "sold")}
                   className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   required
                 />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DeleteProduct from "./DeleteProduct";
 import AddProductForm from "./AddProductForm";
 import UpdateProductForm from "./UpdateProductForm";
@@ -7,6 +7,20 @@ import EditIcon from "@mui/icons-material/Edit";
 export default function ProductItem({ productStock, setProductStock }) {
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [totalSold, setTotalSold] = useState(0);
+
+  // Calculate total sold for all products
+  useEffect(() => {
+    let total = 0;
+    productStock.forEach((product) => {
+      product.colors.forEach((color) => {
+        Object.values(color.sizes).forEach((size) => {
+          total += size.sold;
+        });
+      });
+    });
+    setTotalSold(total);
+  }, [productStock]);
 
   const toggleAddForm = (product) => {
     setShowAddForm(!showAddForm);
@@ -26,9 +40,22 @@ export default function ProductItem({ productStock, setProductStock }) {
     setSelectedProduct(null);
     setTimeout(() => {}, 500);
   };
+
+  // Function to calculate total sold for a color
+  const calculateTotalSold = (sizes) => {
+    let totalSold = 0;
+    Object.values(sizes).forEach((size) => {
+      if (size && typeof size === "object" && "sold" in size) {
+        totalSold += size.sold || 0; // ensure `size.sold` is a number
+      }
+    });
+    return totalSold;
+  };
+
   return (
     <div>
       <div className="max-w-4xl mx-auto">
+        <h2 className="text-lg font-semibold mb-4"></h2>
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {productStock.map((product) => (
             <li
@@ -45,10 +72,10 @@ export default function ProductItem({ productStock, setProductStock }) {
                 />
                 <div className="p-2">
                   <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
-                  <p className="text-gray-700 mb-1 text-sm">
+                  <p className="mb-1 text-xs">
                     Jenis Kain: {product.fabric_type}
                   </p>
-                  <p className="text-gray-700 mb-1 text-sm">
+                  <p className="mb-1 text-xs">
                     Harga Jual: Rp. {product.price}
                   </p>
                   {product.colors.map((color) => (
@@ -65,28 +92,30 @@ export default function ProductItem({ productStock, setProductStock }) {
                           ) : null
                         )}
                       </div>
+                      <p className=" mb-1 text-xs">
+                        Total Terjual: {calculateTotalSold(color.sizes)}
+                      </p>
                     </div>
                   ))}
                 </div>
               </div>
               <div className="flex flex-row-reverse">
                 <DeleteProduct productId={product._id} />
-                {showAddForm && (
-                  <UpdateProductForm
-                    selectedProduct={selectedProduct}
-                    handleCloseForm={handleCloseForm}
-                    handleChange={handleChange}
-                    products={product}
-                  />
-                )}
-                <EditIcon
-                  onClick={() => toggleAddForm({ colors: [] })}
-                ></EditIcon>
+                <EditIcon onClick={() => toggleAddForm(product)} />
               </div>
             </li>
           ))}
         </ul>
       </div>
+
+      {showAddForm && selectedProduct && (
+        <UpdateProductForm
+          selectedProduct={selectedProduct}
+          handleCloseForm={handleCloseForm}
+          handleChange={handleChange}
+          products={selectedProduct}
+        />
+      )}
     </div>
   );
 }
