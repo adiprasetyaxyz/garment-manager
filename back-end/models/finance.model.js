@@ -9,6 +9,7 @@ const MonthlyFinancialReportSchema = new mongoose.Schema({
   month: { type: String, required: true }, // e.g., 'January'
   year: { type: Number, required: true },
   sales: [ProductSchema],
+  totalUnitSold: { type: Number, required: true },
   expenses: {
     materialCost: { type: Number, required: true },
     tailorCost: { type: Number, required: true },
