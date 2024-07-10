@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import { useState } from "react";
+import Succes from "../components/notification/succes";
 
 export default function MainLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);

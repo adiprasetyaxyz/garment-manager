@@ -4,25 +4,30 @@ import FabricForm from "../components/materials/FabricForm";
 import FabricStockItem from "../components/materials/fabricStockItem";
 import CloseIcon from "@mui/icons-material/Close";
 
-export default function FabricStock() {
+export default function FabricStock({
+  setMessage,
+  setShowNotification,
+  setShowDangerNotification,
+}) {
   const [fabricStock, setFabricStock] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    async function fetchFabricStock() {
-      try {
-        const res = await fetch(`${CONFIG.URL}/materials`);
-        if (!res.ok) {
-          throw new Error("Failed to fetch stock information");
-        }
-        const data = await res.json();
-        setFabricStock(data);
-      } catch (error) {
-        console.error("Error fetching Product:", error);
-      }
-    }
     fetchFabricStock();
   }, []);
+
+  const fetchFabricStock = async () => {
+    try {
+      const res = await fetch(`${CONFIG.URL}/materials`);
+      if (!res.ok) {
+        throw new Error("Failed to fetch stock information");
+      }
+      const data = await res.json();
+      setFabricStock(data);
+    } catch (error) {
+      console.error("Error fetching Product:", error);
+    }
+  };
 
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -39,21 +44,22 @@ export default function FabricStock() {
       });
 
       const data = await response.json();
-      console.log(data);
+      console.log("Product successfully added:", data);
+      setMessage("Produk berhasil dibuat");
+      setShowNotification(true);
       if (!response.ok) {
         throw new Error(data.message || "Failed to add product");
       }
 
-      console.log("Product successfully added:", data);
-      setFabricStock([data]);
-      setTimeout(() => {
-        window.location.reload(); // Refresh the page after successful deletion
-      }, 500);
+      setFabricStock([...fabricStock, data]); // Update fabricStock state
+      setShowForm(false); // Hide the form
     } catch (error) {
       console.error("Error adding product:", error);
+      setMessage("Gagal membuat produk!");
+      setShowDangerNotification(true);
     }
-    setShowForm(false);
   };
+
   const handleUpdateFormSubmit = async (updatedFabric) => {
     const { _id, ...data } = updatedFabric; // Extract _id and other data
 
@@ -67,22 +73,22 @@ export default function FabricStock() {
       });
 
       const responseData = await response.json();
-      console.log(responseData);
-
+      console.log("Product successfully updated:", responseData);
+      setMessage("Produk berhasil diubah");
+      setShowNotification(true);
       if (!response.ok) {
         throw new Error(responseData.message || "Failed to update product");
       }
 
-      console.log("Product successfully updated:", responseData);
-      // Update fabricStock state if needed
       setFabricStock((prevStock) =>
         prevStock.map((fabric) => (fabric._id === _id ? responseData : fabric))
       );
-      window.location.reload();
+      setShowForm(false); // Hide the form
     } catch (error) {
       console.error("Error updating product:", error);
+      setMessage("Gagal mengubah produk!");
+      setShowDangerNotification(true);
     }
-    setShowForm(false);
   };
 
   return (
@@ -99,7 +105,7 @@ export default function FabricStock() {
             <CloseIcon
               onClick={toggleForm}
               className="absolute hover:cursor-pointer top-0 right-0 m-4 text-gray-500 hover:text-gray-700"
-            ></CloseIcon>
+            />
             <FabricForm onSubmit={handleFormSubmit} />
           </div>
         </div>

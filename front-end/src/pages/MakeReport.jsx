@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import DataForm from "../components/reports/DataForm";
 import CONFIG from "../script/config";
 
-export default function MakeReport() {
+export default function MakeReport({
+  setMessage,
+  setShowNotification,
+  setShowDangerNotification,
+}) {
   const [productStock, setProductStock] = useState([]);
+
   useEffect(() => {
     async function fetchProductStock() {
       try {
@@ -19,6 +24,7 @@ export default function MakeReport() {
     }
     fetchProductStock();
   }, []);
+
   const handleSubmit = async (report) => {
     try {
       const response = await fetch(`${CONFIG.URL}/finance`, {
@@ -35,14 +41,17 @@ export default function MakeReport() {
         throw new Error(data.message || "Failed to add report");
       }
 
-      console.log("Report successfully added:", data);
+      setMessage("Report successfully added!");
+      setShowNotification(true);
     } catch (error) {
-      console.error("Error adding product:", error);
+      console.error("Error make report:", error);
+      setMessage("Gagal Membuat Laporan");
+      setShowDangerNotification(true);
     }
   };
 
   return (
-    <div>
+    <div className="relative">
       <div className="lg:m-14 bg-white lg:p-6 rounded-md sm:m-6 sm:p-6 xs:m-3 xs:p-3">
         <DataForm
           productStock={productStock}

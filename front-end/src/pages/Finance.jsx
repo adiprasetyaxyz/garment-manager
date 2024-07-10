@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import CONFIG from "../script/config";
 import ReportList from "../components/reports/ReportList";
 
-export default function Finance() {
+export default function Finance({
+  setMessage,
+  setShowNotification,
+  setShowDangerNotification,
+}) {
   const [allReports, setAllReports] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
   useEffect(() => {
@@ -37,9 +41,12 @@ export default function Finance() {
       setAllReports((prevReports) =>
         prevReports.filter((report) => report._id !== reportId)
       );
-      console.log("Deleted report with ID:", reportId);
+      setMessage(`Laporan telah dihapus`);
+      setShowNotification(true);
     } catch (error) {
       console.error("Error deleting report:", error);
+      setMessage("Laporan gagal dihapus");
+      setShowDangerNotification(true);
     }
   };
 
