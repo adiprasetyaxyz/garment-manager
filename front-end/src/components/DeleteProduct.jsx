@@ -10,7 +10,6 @@ export default function DeleteProduct({ productId }) {
   const handleDelete = async () => {
     setLoading(true);
     setError(null);
-    setSuccess(false);
 
     try {
       const response = await fetch(`${CONFIG.URL}/products/${productId}`, {
@@ -26,14 +25,15 @@ export default function DeleteProduct({ productId }) {
       }
 
       setSuccess(true);
-      setTimeout(() => {
-        window.location.reload(); // Refresh the page after successful deletion
-      }, 500); // Adjust the timeout as needed
     } catch (error) {
       setError(error.message || "Failed to delete product. Please try again.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const closeSuccessMessage = () => {
+    setSuccess(false);
   };
 
   return (
@@ -47,7 +47,15 @@ export default function DeleteProduct({ productId }) {
       </DeleteOutlineIcon>
       {error && <p className="text-red-600 mt-2">{error}</p>}
       {success && (
-        <p className="text-green-600 mt-2">Product successfully deleted.</p>
+        <div className="flex items-center mt-2">
+          <p className="text-green-600">Product successfully deleted.</p>
+          <button
+            onClick={closeSuccessMessage}
+            className="ml-2 text-sm text-gray-500 focus:outline-none"
+          >
+            Close
+          </button>
+        </div>
       )}
     </div>
   );

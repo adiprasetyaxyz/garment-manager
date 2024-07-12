@@ -12,6 +12,7 @@ import MakeReport from "./pages/MakeReport";
 import { useEffect, useState } from "react";
 import Succes from "./components/notification/succes";
 import Danger from "./components/notification/Danger";
+import ReportDetail from "./pages/ReportDetail";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -95,6 +96,14 @@ function App() {
             setShowNotification={setShowNotification}
             setShowDangerNotification={setShowDangerNotification}
           />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/finance/report/detail/:reportId",
+      element: (
+        <MainLayout>
+          <ReportDetail />
         </MainLayout>
       ),
     },

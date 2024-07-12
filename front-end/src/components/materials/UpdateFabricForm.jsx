@@ -1,7 +1,11 @@
 import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 
-export default function UpdateFabricForm({ onSubmit, initialData }) {
+export default function UpdateFabricForm({
+  onSubmit,
+  initialData,
+  setShowUpdateForm,
+}) {
   const {
     register,
     handleSubmit,
@@ -18,8 +22,8 @@ export default function UpdateFabricForm({ onSubmit, initialData }) {
   });
 
   const onSubmitHandler = (data) => {
+    setShowUpdateForm(false);
     onSubmit(data);
-    reset();
   };
 
   return (

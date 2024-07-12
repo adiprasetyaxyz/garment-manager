@@ -46,13 +46,12 @@ export default function FabricStock({
       const data = await response.json();
       console.log("Product successfully added:", data);
       setMessage("Produk berhasil dibuat");
+      setFabricStock([...fabricStock, data]); // Update fabricStock state
+      setShowForm(false); // Hide the form
       setShowNotification(true);
       if (!response.ok) {
         throw new Error(data.message || "Failed to add product");
       }
-
-      setFabricStock([...fabricStock, data]); // Update fabricStock state
-      setShowForm(false); // Hide the form
     } catch (error) {
       console.error("Error adding product:", error);
       setMessage("Gagal membuat produk!");
@@ -76,14 +75,20 @@ export default function FabricStock({
       console.log("Product successfully updated:", responseData);
       setMessage("Produk berhasil diubah");
       setShowNotification(true);
+
       if (!response.ok) {
         throw new Error(responseData.message || "Failed to update product");
+      }
+
+      // Ensure responseData contains _id
+      if (!responseData._id) {
+        responseData._id = _id; // If not, assign the original _id to responseData
       }
 
       setFabricStock((prevStock) =>
         prevStock.map((fabric) => (fabric._id === _id ? responseData : fabric))
       );
-      setShowForm(false); // Hide the form
+      setShowForm(false);
     } catch (error) {
       console.error("Error updating product:", error);
       setMessage("Gagal mengubah produk!");
@@ -114,6 +119,9 @@ export default function FabricStock({
         fabricStock={fabricStock}
         setFabricStock={setFabricStock}
         handleUpdateFormSubmit={handleUpdateFormSubmit}
+        setMessage={setMessage}
+        setShowNotification={setShowNotification}
+        setShowDangerNotification={setShowDangerNotification}
       />
     </div>
   );

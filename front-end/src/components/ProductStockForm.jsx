@@ -21,11 +21,11 @@ function ProductForm() {
 
   const [product, setProduct] = useState(initialProductState);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(product);
+    setLoading(true);
+
     try {
       // Validate product data before sending
       if (!product.colors || product.colors.length === 0) {
@@ -41,17 +41,13 @@ function ProductForm() {
       });
 
       const data = await response.json();
-      console.log(product);
       if (!response.ok) {
         throw new Error(data.message || "Failed to add product");
       }
 
       console.log("Product successfully added:", data);
       setProduct(initialProductState);
-
-      window.location.reload(); // Refresh the page after successful deletion
     } catch (error) {
-      setError(error.message || "Failed to add product. Please try again.");
       console.error("Error adding product:", error);
     } finally {
       setLoading(false);
@@ -60,9 +56,7 @@ function ProductForm() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProduct((prev) => {
-      return { ...prev, [name]: value };
-    });
+    setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleColorChange = (index, e) => {
@@ -197,10 +191,6 @@ function ProductForm() {
             {loading ? "Submitting..." : "Submit"}
           </button>
         </div>
-
-        {error && (
-          <div className="col-span-2 text-red-600 text-sm mt-2">{error}</div>
-        )}
       </form>
     </div>
   );

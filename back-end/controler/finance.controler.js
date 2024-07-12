@@ -45,11 +45,12 @@ const updateMonthlyReport = async (req, res) => {
     const reportData = req.body;
 
     // Calculate totals
-    const { totalSales, totalExpense, profit } = calculateTotals(reportData);
+    const { totalSales, totalExpense, profit, totalUnitSold } =
+      calculateTotals(reportData);
     reportData.totalSales = totalSales;
     reportData.totalExpense = totalExpense;
     reportData.profit = profit;
-
+    reportData.totalUnitSold = totalUnitSold;
     const report = await MonthlyFinancialReport.findByIdAndUpdate(
       id,
       reportData,

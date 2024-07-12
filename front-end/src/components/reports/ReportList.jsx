@@ -1,14 +1,16 @@
-import { Button } from "@mui/material";
 import React, { useState } from "react";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import { Link } from "react-router-dom";
 
 export default function ReportList({
   allReports,
   handleDelete,
   year,
   setYear,
+  setShowUpdateForm,
+  setId,
 }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const handleYear = (currentYear) => {
@@ -136,15 +138,26 @@ export default function ReportList({
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
                 <td className="w-4 p-4">
-                  <LibraryBooksIcon className="text-blue-400 cursor-pointer"></LibraryBooksIcon>
+                  <Link to={`detail/${report._id}`}>
+                    <LibraryBooksIcon className="text-blue-400 cursor-pointer"></LibraryBooksIcon>
+                  </Link>
                 </td>
                 <td className="px-6 py-4">{`${report.month} ${report.year}`}</td>
-                <td className="px-6 py-4">{report.totalExpense}</td>
-                <td className="px-6 py-4">{report.totalSales}</td>
-                <td className="px-6 py-4">{report.totalUnitSold}</td>
-                <td className="px-6 py-4">{report.profit}</td>
                 <td className="px-6 py-4">
-                  <EditNoteIcon className="text-red-500 cursor-pointer"></EditNoteIcon>
+                  {report.totalExpense.toLocaleString()}
+                </td>
+                <td className="px-6 py-4">
+                  {report.totalSales.toLocaleString()}
+                </td>
+                <td className="px-6 py-4">{report.totalUnitSold}</td>
+                <td className="px-6 py-4">{report.profit.toLocaleString()}</td>
+                <td className="px-6 py-4">
+                  <EditNoteIcon
+                    onClick={() => {
+                      return setShowUpdateForm(true), setId(report._id);
+                    }}
+                    className="text-red-500 cursor-pointer"
+                  ></EditNoteIcon>
                   <DeleteOutlineIcon
                     className="text-red-500 cursor-pointer"
                     onClick={() => handleDelete(report._id)}

@@ -9,6 +9,9 @@ export default function FabricStockItem({
   fabricStock,
   setFabricStock,
   handleUpdateFormSubmit,
+  setMessage,
+  setShowNotification,
+  setShowDangerNotification,
 }) {
   const [fabricToUpdate, setFabricToUpdate] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -17,6 +20,7 @@ export default function FabricStockItem({
     const fabric = fabricStock.find((fabric) => fabric._id === fabricId);
     setFabricToUpdate(fabric);
     setShowUpdateForm(true);
+    console.log(fabric._id);
   };
 
   const handleCloseForm = () => {
@@ -38,8 +42,12 @@ export default function FabricStockItem({
         prevStock.filter((fabric) => fabric._id !== fabricId)
       );
       console.log("Fabric successfully deleted");
+      setMessage("Stok kain berhasil dihapus");
+      setShowNotification(true);
     } catch (error) {
       console.error("Error deleting fabric:", error);
+      setMessage("Stok kain gagal dihapus");
+      setShowDangerNotification(true);
     }
   };
 
@@ -110,6 +118,7 @@ export default function FabricStockItem({
             <UpdateFabricForm
               onSubmit={handleUpdateFormSubmit}
               initialData={fabricToUpdate}
+              setShowUpdateForm={setShowUpdateForm}
             />
           </div>
         </div>

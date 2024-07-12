@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import DeleteProduct from "./DeleteProduct";
-import AddProductForm from "./AddProductForm";
 import UpdateProductForm from "./UpdateProductForm";
 import EditIcon from "@mui/icons-material/Edit";
 
-export default function ProductItem({ productStock, setProductStock }) {
+export default function ProductItem({
+  productStock,
+  setProductStock,
+  setMessage,
+  setShowNotification,
+  setShowDangerNotification,
+}) {
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [totalSold, setTotalSold] = useState(0);
@@ -32,6 +37,7 @@ export default function ProductItem({ productStock, setProductStock }) {
       product._id === updatedProduct._id ? updatedProduct : product
     );
     setProductStock(updatedProducts);
+
     setShowAddForm(false);
   };
 
