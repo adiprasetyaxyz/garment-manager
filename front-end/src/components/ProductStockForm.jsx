@@ -1,58 +1,9 @@
 import React, { useState } from "react";
 import CONFIG from "../script/config";
 
-function ProductForm() {
-  const initialProductState = {
-    name: "",
-    fabric_type: "",
-    price: "",
-    colors: [
-      {
-        color: "",
-        sizes: {
-          S: { stock: "", sold: 0 },
-          M: { stock: "", sold: 0 },
-          L: { stock: "", sold: 0 },
-          XL: { stock: "", sold: 0 },
-        },
-      },
-    ],
-  };
-
-  const [product, setProduct] = useState(initialProductState);
+function ProductForm({ product, setProduct, handleSubmit, handleCloseForm }) {
   const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      // Validate product data before sending
-      if (!product.colors || product.colors.length === 0) {
-        throw new Error("Please add at least one color with sizes.");
-      }
-
-      const response = await fetch(`${CONFIG.URL}/products`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(product),
-      });
-
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to add product");
-      }
-
-      console.log("Product successfully added:", data);
-      setProduct(initialProductState);
-    } catch (error) {
-      console.error("Error adding product:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [error, setError] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -91,11 +42,27 @@ function ProductForm() {
     }));
   };
 
+  const onSubmit = async (e) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      await handleSubmit(e);
+      setProduct(initialProductState);
+      handleCloseForm();
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded shadow-md">
       <h1 className="text-xl font-semibold mb-4">Input Product Data</h1>
+      {error && <p className="text-red-500">{error}</p>}
       <form
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
         className="grid grid-cols-2 gap-4 h-full overflow-auto"
       >
         <div>

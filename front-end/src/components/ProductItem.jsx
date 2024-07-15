@@ -120,6 +120,9 @@ export default function ProductItem({
           handleCloseForm={handleCloseForm}
           handleChange={handleChange}
           products={selectedProduct}
+          setMessage={setMessage}
+          setShowNotification={setShowNotification}
+          setShowDangerNotification={setShowDangerNotification}
         />
       )}
     </div>

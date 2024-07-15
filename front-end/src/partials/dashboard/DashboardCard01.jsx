@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LineChart from "../../charts/LineChart01";
 import Icon from "../../images/icon-01.svg";
@@ -6,44 +6,57 @@ import EditMenu from "../../components/DropdownEditMenu";
 
 // Import utilities
 import { tailwindConfig, hexToRGB } from "../../utils/Utils";
+import CONFIG from "../../script/config";
+
+// Mapping nama bulan ke angka bulan
+const monthToNumber = {
+  Januari: "01",
+  Februari: "02",
+  Maret: "03",
+  April: "04",
+  Mei: "05",
+  Juni: "06",
+  Juli: "07",
+  Agustus: "08",
+  September: "09",
+  Oktober: "10",
+  November: "11",
+  Desember: "12",
+};
 
 function DashboardCard01() {
+  const [reports, setReports] = useState([]);
+
+  useEffect(() => {
+    async function fetchReports() {
+      try {
+        const res = await fetch(`${CONFIG.URL}/finance`);
+        const data = await res.json();
+        setReports(data.reports);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    }
+
+    fetchReports();
+  }, []);
+
+  // Generate labels in the format "01-01-2021"
+  const labels = reports.map((report) => {
+    const month = monthToNumber[report.month];
+    const paddedMonth = month.length === 1 ? `0${month}` : month;
+    return `${paddedMonth}-01-${report.year}`;
+  });
+
+  const data1 = reports.map((report) => report.profit);
+  const data2 = reports.map((report) => report.totalUnitSold);
+  console.log(labels);
   const chartData = {
-    labels: [
-      "12-01-2020",
-      "01-01-2021",
-      "02-01-2021",
-      "03-01-2021",
-      "04-01-2021",
-      "05-01-2021",
-      "06-01-2021",
-      "07-01-2021",
-      "08-01-2021",
-      "09-01-2021",
-      "10-01-2021",
-      "11-01-2021",
-      "12-01-2021",
-      "01-01-2022",
-      "02-01-2022",
-      "03-01-2022",
-      "04-01-2022",
-      "05-01-2022",
-      "06-01-2022",
-      "07-01-2022",
-      "08-01-2022",
-      "09-01-2022",
-      "10-01-2022",
-      "11-01-2022",
-      "12-01-2022",
-      "01-01-2023",
-    ],
+    labels: labels,
     datasets: [
       // Indigo line
       {
-        data: [
-          732, 610, 610, 504, 504, 504, 349, 349, 504, 342, 504, 610, 391, 192,
-          154, 273, 191, 191, 126, 263, 349, 252, 423, 622, 470, 532,
-        ],
+        data: data1,
         fill: true,
         backgroundColor: `rgba(${hexToRGB(
           tailwindConfig().theme.colors.blue[500]
@@ -61,10 +74,7 @@ function DashboardCard01() {
       },
       // Gray line
       {
-        data: [
-          532, 532, 532, 404, 404, 314, 314, 314, 314, 314, 234, 314, 234, 234,
-          314, 314, 314, 388, 314, 202, 202, 202, 202, 314, 720, 642,
-        ],
+        data: data2,
         borderColor: `rgba(${hexToRGB(
           tailwindConfig().theme.colors.slate[500]
         )}, 0.25)`,
@@ -84,7 +94,7 @@ function DashboardCard01() {
       },
     ],
   };
-
+  console.log(chartData);
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
       <div className="px-5 pt-5">
