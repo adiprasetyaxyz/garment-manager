@@ -80,7 +80,6 @@ function LineChart01({ data, width, height }) {
                   const date = moment(tooltipItem[0].label, "MMM YYYY");
                   return date.format("MMMM YYYY");
                 },
-                label: (context) => formatValue(context.parsed.y),
               },
               bodyColor: darkMode
                 ? tooltipBodyColor.dark
@@ -121,27 +120,19 @@ function LineChart01({ data, width, height }) {
   useEffect(() => {
     if (!chart) return;
 
-    chart.options.chartArea.backgroundColor = darkMode
-      ? chartAreaBg.dark
-      : chartAreaBg.light;
-    chart.options.plugins.tooltip.bodyColor = darkMode
-      ? tooltipBodyColor.dark
-      : tooltipBodyColor.light;
-    chart.options.plugins.tooltip.backgroundColor = darkMode
-      ? tooltipBgColor.dark
-      : tooltipBgColor.light;
-    chart.options.plugins.tooltip.borderColor = darkMode
-      ? tooltipBorderColor.dark
-      : tooltipBorderColor.light;
+    if (darkMode) {
+      chart.options.chartArea.backgroundColor = chartAreaBg.dark;
+      chart.options.plugins.tooltip.bodyColor = tooltipBodyColor.dark;
+      chart.options.plugins.tooltip.backgroundColor = tooltipBgColor.dark;
+      chart.options.plugins.tooltip.borderColor = tooltipBorderColor.dark;
+    } else {
+      chart.options.chartArea.backgroundColor = chartAreaBg.light;
+      chart.options.plugins.tooltip.bodyColor = tooltipBodyColor.light;
+      chart.options.plugins.tooltip.backgroundColor = tooltipBgColor.light;
+      chart.options.plugins.tooltip.borderColor = tooltipBorderColor.light;
+    }
     chart.update("none");
-  }, [
-    chart,
-    darkMode,
-    chartAreaBg,
-    tooltipBodyColor,
-    tooltipBgColor,
-    tooltipBorderColor,
-  ]);
+  }, [chart, darkMode]);
 
   return <canvas ref={canvasRef} width={width} height={height}></canvas>;
 }

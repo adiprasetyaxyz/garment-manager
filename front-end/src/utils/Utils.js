@@ -1,9 +1,9 @@
-import resolveConfig from 'tailwindcss/resolveConfig';
+import resolveConfig from "tailwindcss/resolveConfig";
 
 export const tailwindConfig = () => {
   // Tailwind config
-  return resolveConfig('./src/css/tailwind.config.js')
-}
+  return resolveConfig("./src/css/tailwind.config.js");
+};
 
 export const hexToRGB = (h) => {
   let r = 0;
@@ -21,9 +21,12 @@ export const hexToRGB = (h) => {
   return `${+r},${+g},${+b}`;
 };
 
-export const formatValue = (value) => Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  maximumSignificantDigits: 3,
-  notation: 'compact',
-}).format(value);
+export function formatValue(value) {
+  // Convert numeric value to Rupiah format
+  const formatter = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  });
+  return formatter.format(value);
+}

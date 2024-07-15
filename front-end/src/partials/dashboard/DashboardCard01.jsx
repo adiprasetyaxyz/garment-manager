@@ -1,3 +1,5 @@
+// DashboardCard01.jsx
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LineChart from "../../charts/LineChart01";
@@ -8,17 +10,16 @@ import EditMenu from "../../components/DropdownEditMenu";
 import { tailwindConfig, hexToRGB } from "../../utils/Utils";
 import CONFIG from "../../script/config";
 
-// Mapping nama bulan ke angka bulan
 const monthToNumber = {
-  Januari: "01",
-  Februari: "02",
-  Maret: "03",
-  April: "04",
-  Mei: "05",
-  Juni: "06",
-  Juli: "07",
-  Agustus: "08",
-  September: "09",
+  Januari: "1",
+  Februari: "2",
+  Maret: "3",
+  April: "4",
+  Mei: "5",
+  Juni: "6",
+  Juli: "7",
+  Agustus: "8",
+  September: "9",
   Oktober: "10",
   November: "11",
   Desember: "12",
@@ -26,6 +27,9 @@ const monthToNumber = {
 
 function DashboardCard01() {
   const [reports, setReports] = useState([]);
+  const [labels, setLabels] = useState([]);
+  const [data1, setData1] = useState([]);
+  const [data2, setData2] = useState([]);
 
   useEffect(() => {
     async function fetchReports() {
@@ -33,6 +37,20 @@ function DashboardCard01() {
         const res = await fetch(`${CONFIG.URL}/finance`);
         const data = await res.json();
         setReports(data.reports);
+
+        // Generate labels in the format "MM-01-YYYY"
+        const labelsData = data.reports.map((report) => {
+          const month = monthToNumber[report.month];
+          const paddedMonth = month.length === 1 ? `0${month}` : month;
+          return `${paddedMonth}-01-${report.year}`;
+        });
+        setLabels(labelsData);
+
+        // Set data1 and data2
+        const newData1 = data.reports.map((report) => report.profit);
+        const newData2 = data.reports.map((report) => report.totalUnitSold);
+        setData1(newData1);
+        setData2(newData2);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -41,20 +59,9 @@ function DashboardCard01() {
     fetchReports();
   }, []);
 
-  // Generate labels in the format "01-01-2021"
-  const labels = reports.map((report) => {
-    const month = monthToNumber[report.month];
-    const paddedMonth = month.length === 1 ? `0${month}` : month;
-    return `${paddedMonth}-01-${report.year}`;
-  });
-
-  const data1 = reports.map((report) => report.profit);
-  const data2 = reports.map((report) => report.totalUnitSold);
-  console.log(labels);
   const chartData = {
     labels: labels,
     datasets: [
-      // Indigo line
       {
         data: data1,
         fill: true,
@@ -72,7 +79,6 @@ function DashboardCard01() {
         pointHoverBorderWidth: 0,
         clip: 20,
       },
-      // Gray line
       {
         data: data2,
         borderColor: `rgba(${hexToRGB(
@@ -94,7 +100,7 @@ function DashboardCard01() {
       },
     ],
   };
-  console.log(chartData);
+
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
       <div className="px-5 pt-5">
