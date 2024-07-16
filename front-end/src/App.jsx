@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import Succes from "./components/notification/succes";
 import Danger from "./components/notification/Danger";
 import ReportDetail from "./pages/ReportDetail";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -42,6 +43,7 @@ function App() {
           <Dashboard />
         </MainLayout>
       ),
+      errorElement: <ErrorPage />,
     },
     {
       path: "/products",

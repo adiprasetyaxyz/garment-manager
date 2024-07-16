@@ -8,56 +8,10 @@ import EditMenu from "../../components/DropdownEditMenu";
 
 // Import utilities
 import { tailwindConfig, hexToRGB } from "../../utils/Utils";
-import CONFIG from "../../script/config";
-
-const monthToNumber = {
-  Januari: "1",
-  Februari: "2",
-  Maret: "3",
-  April: "4",
-  Mei: "5",
-  Juni: "6",
-  Juli: "7",
-  Agustus: "8",
-  September: "9",
-  Oktober: "10",
-  November: "11",
-  Desember: "12",
-};
-
-function DashboardCard01() {
-  const [reports, setReports] = useState([]);
-  const [labels, setLabels] = useState([]);
-  const [data1, setData1] = useState([]);
-  const [data2, setData2] = useState([]);
-
-  useEffect(() => {
-    async function fetchReports() {
-      try {
-        const res = await fetch(`${CONFIG.URL}/finance`);
-        const data = await res.json();
-        setReports(data.reports);
-
-        // Generate labels in the format "MM-01-YYYY"
-        const labelsData = data.reports.map((report) => {
-          const month = monthToNumber[report.month];
-          const paddedMonth = month.length === 1 ? `0${month}` : month;
-          return `${paddedMonth}-01-${report.year}`;
-        });
-        setLabels(labelsData);
-
-        // Set data1 and data2
-        const newData1 = data.reports.map((report) => report.totalUnitSold);
-
-        setData1(newData1);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    }
-
-    fetchReports();
-  }, []);
-
+function DashboardCard02({ labels, data1, reports }) {
+  const totalSold = data1.reduce((total, currentVal) => {
+    return total + currentVal;
+  }, 0);
   const chartData = {
     labels: labels,
     datasets: [
@@ -79,7 +33,7 @@ function DashboardCard01() {
         clip: 20,
       },
       {
-        data: data2,
+        data: [],
         borderColor: `rgba(${hexToRGB(
           tailwindConfig().theme.colors.slate[500]
         )}, 0.25)`,
@@ -135,17 +89,12 @@ function DashboardCard01() {
           </EditMenu>
         </header>
         <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-2">
-          Acme Plus
+          Produk terjual
         </h2>
-        <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1">
-          Sales
-        </div>
+        <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-1"></div>
         <div className="flex items-start">
           <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">
-            $24,780
-          </div>
-          <div className="text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full">
-            +49%
+            {totalSold} pcs
           </div>
         </div>
       </div>
@@ -158,4 +107,4 @@ function DashboardCard01() {
   );
 }
 
-export default DashboardCard01;
+export default DashboardCard02;
