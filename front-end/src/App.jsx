@@ -10,7 +10,7 @@ import FabricStock from "./pages/FabricStock";
 import Finance from "./pages/Finance";
 import MakeReport from "./pages/MakeReport";
 import { useEffect, useState } from "react";
-import Succes from "./components/notification/succes";
+import Succes from "./components/notification/Success";
 import Danger from "./components/notification/Danger";
 import ReportDetail from "./pages/ReportDetail";
 import ErrorPage from "./pages/ErrorPage";
