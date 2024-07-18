@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import DashboardAvatars from "../partials/dashboard/DashboardAvatars";
-import FilterButton from "../components/DropdownFilter";
+
 import YearPicker from "../components/YearPicker";
 import DashboardCard01 from "../partials/dashboard/DashboardCard01";
 import DashboardCard02 from "../partials/dashboard/DashboardCard02";
@@ -35,6 +35,21 @@ function Dashboard() {
   const [expenseData, setExpenseData] = useState([]);
   const [revenueData, setRevenueData] = useState([]);
   const [year, setYear] = useState(new Date().getFullYear());
+  const [sortedSales, setSortedSales] = useState([]);
+  const [productData, setProductData] = useState([]);
+
+  useEffect(() => {
+    async function fetchProduct() {
+      try {
+        const res = await fetch(`${CONFIG.URL}/products`);
+        const data = await res.json();
+        setProductData(data.sort((a, b) => b.total_sold - a.total_sold));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchProduct();
+  }, []);
 
   useEffect(() => {
     async function fetchReports() {
@@ -62,6 +77,11 @@ function Dashboard() {
         setSoldData(newSoldData);
         setExpenseData(newExpenseData);
         setRevenueData(newRevenueData);
+
+        // Extract and sort sales data
+        const allSales = data.reports.flatMap((report) => report.sales);
+        allSales.sort((a, b) => b.ProductSold - a.ProductSold);
+        setSortedSales(allSales);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -81,7 +101,7 @@ function Dashboard() {
           {/* Dashboard actions */}
           <div className="sm:flex sm:justify-between sm:items-center mb-8">
             {/* Left: Avatars */}
-            <DashboardAvatars />
+            <div></div>
 
             {/* Right: Actions */}
             <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
@@ -140,9 +160,7 @@ function Dashboard() {
             <DashboardCard10 />
 
             {/* Table (Top Channels) */}
-            <DashboardCard07 />
-            {/* Doughnut chart (Top Countries) */}
-            <DashboardCard06 />
+            <DashboardCard07 productData={productData} />
           </div>
         </div>
       </main>

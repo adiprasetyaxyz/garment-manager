@@ -65,7 +65,7 @@ export default function FabricStockItem({
 
         return (
           <div key={fabric._id} className="fabric-item">
-            <div className="bg-gray-300 p-6 rounded-lg">
+            <div className=" bg-white dark:bg-slate-800  border border-slate-200 dark:border-slate-700 p-6 rounded-lg">
               <div className="flex justify-between mb-2">
                 <div className="text-left">
                   <p>Jenis Kain</p>
@@ -110,17 +110,12 @@ export default function FabricStockItem({
       })}
       {showUpdateForm && fabricToUpdate && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg relative">
-            <CloseIcon
-              onClick={handleCloseForm}
-              className="hover:cursor-pointer absolute top-0 right-0 m-4 text-gray-500 hover:text-gray-700"
-            ></CloseIcon>
-            <UpdateFabricForm
-              onSubmit={handleUpdateFormSubmit}
-              initialData={fabricToUpdate}
-              setShowUpdateForm={setShowUpdateForm}
-            />
-          </div>
+          <UpdateFabricForm
+            onSubmit={handleUpdateFormSubmit}
+            initialData={fabricToUpdate}
+            setShowUpdateForm={setShowUpdateForm}
+            handleCloseForm={handleCloseForm}
+          />
         </div>
       )}
     </div>

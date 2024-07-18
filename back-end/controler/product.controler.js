@@ -24,18 +24,47 @@ const getProductById = async (req, res) => {
     res.status(200).json(product);
   } catch (error) {}
 };
-
-const updateProducts = async (req, res) => {
+const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await Product.findByIdAndUpdate(id, req.body);
-    if (!product) {
+    const productData = req.body;
+
+    // Validate productData structure
+    if (
+      !productData ||
+      !productData.colors ||
+      !Array.isArray(productData.colors)
+    ) {
+      return res.status(400).json({ message: "Invalid product data format" });
+    }
+
+    // Calculate total_stock and total_sold
+    let totalStock = 0;
+    let totalSold = 0;
+
+    productData.colors.forEach((color) => {
+      Object.values(color.sizes).forEach((size) => {
+        totalStock += parseFloat(size.stock); // Ensure stock is parsed to float
+        totalSold += parseFloat(size.sold); // Ensure sold is parsed to float
+      });
+    });
+
+    productData.total_stock = totalStock;
+    productData.total_sold = totalSold;
+
+    const updatedProduct = await Product.findByIdAndUpdate(id, productData, {
+      new: true,
+      runValidators: true, // Ensure validation rules are applied
+    });
+
+    if (!updatedProduct) {
       return res.status(404).json({ message: "Product not found" });
     }
-    const updatedProduct = await Product.findById(id);
+
     res.status(200).json(updatedProduct);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Error updating product:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -86,7 +115,7 @@ module.exports = {
   createProduct,
   getAllProducts,
   getProductById,
-  updateProducts,
+  updateProduct,
   deleteProduct,
   soldProduct,
 };

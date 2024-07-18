@@ -12,20 +12,6 @@ export default function ProductItem({
 }) {
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [totalSold, setTotalSold] = useState(0);
-
-  // Calculate total sold for all products
-  useEffect(() => {
-    let total = 0;
-    productStock.forEach((product) => {
-      product.colors.forEach((color) => {
-        Object.values(color.sizes).forEach((size) => {
-          total += size.sold;
-        });
-      });
-    });
-    setTotalSold(total);
-  }, [productStock]);
 
   const toggleAddForm = (product) => {
     setShowAddForm(!showAddForm);
@@ -47,17 +33,6 @@ export default function ProductItem({
     setTimeout(() => {}, 500);
   };
 
-  // Function to calculate total sold for a color
-  const calculateTotalSold = (sizes) => {
-    let totalSold = 0;
-    Object.values(sizes).forEach((size) => {
-      if (size && typeof size === "object" && "sold" in size) {
-        totalSold += size.sold || 0; // ensure `size.sold` is a number
-      }
-    });
-    return totalSold;
-  };
-
   return (
     <div>
       <div className="max-w-4xl mx-auto">
@@ -66,7 +41,7 @@ export default function ProductItem({
           {productStock.map((product) => (
             <li
               key={product._id}
-              className=" bg-white dark:bg-gray-400 bg-transparent-10 rounded-lg shadow-md p-2 m-2"
+              className=" bg-white dark:bg-slate-800  border border-slate-200 dark:border-slate-700 bg-transparent-10 rounded-lg shadow-md p-2 m-2"
             >
               <div className=" grid grid-cols-2 justify-center">
                 <img
@@ -99,7 +74,7 @@ export default function ProductItem({
                         )}
                       </div>
                       <p className=" mb-1 text-xs">
-                        Total Terjual: {calculateTotalSold(color.sizes)}
+                        Total Terjual: {product.total_sold}
                       </p>
                     </div>
                   ))}

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import CONFIG from "../script/config";
 import FabricForm from "../components/materials/FabricForm";
 import FabricStockItem from "../components/materials/fabricStockItem";
-import CloseIcon from "@mui/icons-material/Close";
+
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 export default function FabricStock({
   setMessage,
@@ -100,19 +101,14 @@ export default function FabricStock({
     <div className="relative">
       <button
         onClick={toggleForm}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+        className="ml-4 mt-4 select-none btn bg-indigo-500 hover:bg-indigo-600 text-white"
+        type="button"
       >
-        Tambah Stock
+        Tambah Stock <AddCircleIcon />
       </button>
       {showForm && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg relative">
-            <CloseIcon
-              onClick={toggleForm}
-              className="absolute hover:cursor-pointer top-0 right-0 m-4 text-gray-500 hover:text-gray-700"
-            />
-            <FabricForm onSubmit={handleFormSubmit} />
-          </div>
+          <FabricForm onSubmit={handleFormSubmit} toggleForm={toggleForm} />
         </div>
       )}
       <FabricStockItem

@@ -48,7 +48,8 @@ export default function ReportDetail() {
     <div className="m-6 h-auto">
       <button
         onClick={downloadPDF}
-        className="p-1 m-4 bg-blue-500 text-white text-sm rounded-lg items-end"
+        className=" mt-2 mb-2 btn bg-indigo-500 hover:bg-indigo-600 text-white"
+        type="button"
       >
         <DownloadIcon /> Download PDF
       </button>

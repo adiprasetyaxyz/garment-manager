@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
-
+import CloseIcon from "@mui/icons-material/Close";
 export default function UpdateDataForm({
   productStock,
   handleUpdateSubmitReport,
@@ -82,27 +82,36 @@ export default function UpdateDataForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="top-5 bottom-5 space-y-6 bg-white rounded-lg shadow-lg relative max-h-full overflow-y-auto w-3/4 p-2 m-8"
+      className="top-5  space-y-6  bg-white dark:bg-slate-800  border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg relative max-h-full overflow-y-auto w-3/4 p-8 m-8"
     >
+      <button
+        onClick={() => setShowUpdateForm(false)}
+        className="absolute top-2 right-2"
+      >
+        <CloseIcon className="w-6 h-6 text-gray-500 hover:text-gray-700" />
+      </button>
       <h2 className="text-xl font-bold">Sales</h2>
       <div>
         <label>Tanggal</label>
         <input
           {...register("date")}
           type="date"
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full text-gray-700"
           placeholder="Tanggal"
         />
       </div>
       {salesFields.map((field, index) => (
-        <div key={field.id} className="space-y-4">
+        <div key={field.id} className="space-y-4 ">
           <div>
             <label>Product Name</label>
             <Controller
               name={`sales.${index}.productName`}
               control={control}
               render={({ field }) => (
-                <select {...field} className="border p-2 rounded w-full">
+                <select
+                  {...field}
+                  className="border p-2 rounded w-full text-gray-700"
+                >
                   <option value="">Select a product</option>
                   {productNameArr.map((option) => (
                     <option key={option} value={option}>
@@ -118,7 +127,7 @@ export default function UpdateDataForm({
             <input
               {...register(`sales.${index}.ProductSold`)}
               type="number"
-              className="border p-2 rounded w-full"
+              className="border p-2 rounded w-full text-gray-700"
               placeholder="Product Sold"
             />
           </div>
@@ -127,7 +136,7 @@ export default function UpdateDataForm({
             <input
               {...register(`sales.${index}.ProductRevenue`)}
               type="number"
-              className="border p-2 rounded w-full"
+              className="border p-2 rounded w-full text-gray-700"
               placeholder="Product Revenue"
             />
           </div>
@@ -149,7 +158,7 @@ export default function UpdateDataForm({
         <input
           {...register("expenses.materialCost")}
           type="number"
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full text-gray-700"
           placeholder="Material Cost"
         />
       </div>
@@ -158,7 +167,7 @@ export default function UpdateDataForm({
         <input
           {...register("expenses.tailorCost")}
           type="number"
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full text-gray-700"
           placeholder="Tailor Cost"
         />
       </div>
@@ -167,7 +176,7 @@ export default function UpdateDataForm({
         <input
           {...register("expenses.otherExpenses")}
           type="number"
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full text-gray-700"
           placeholder="Other Expenses"
         />
       </div>
@@ -178,7 +187,7 @@ export default function UpdateDataForm({
       <button
         type="button"
         onClick={() => reset(convertDate)}
-        className="bg-gray-500 text-white p-2 rounded"
+        className="bg-gray-500 text-white p-2 rounded m-2"
       >
         Reset
       </button>

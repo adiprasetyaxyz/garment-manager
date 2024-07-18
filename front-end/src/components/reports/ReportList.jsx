@@ -3,7 +3,7 @@ import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Link } from "react-router-dom";
-
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 export default function ReportList({
   allReports,
   handleDelete,
@@ -42,39 +42,47 @@ export default function ReportList({
   };
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg m-9">
-      <div className="relative inline-block p-2">
-        <button
-          id="dropdownRadioButton"
-          onClick={toggleDropdown}
-          className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-          type="button"
-        >
-          <svg
-            className="w-3 h-3 text-gray-500 dark:text-gray-400 me-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 20 20"
+      <div className="w-full inline-block p-2">
+        <div className="flex justify-between items-center w-full">
+          <button
+            id="dropdownRadioButton"
+            onClick={toggleDropdown}
+            className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+            type="button"
           >
-            <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
-          </svg>
-          {year}
-          <svg
-            className="w-2.5 h-2.5 ms-2.5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 10 6"
+            <svg
+              className="w-3 h-3 text-gray-500 dark:text-gray-400 me-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
+            </svg>
+            {year}
+            <svg
+              className="w-2.5 h-2.5 ms-2.5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </button>
+          <Link
+            className="ml-8 mt-4 btn bg-indigo-500 hover:bg-indigo-600 text-white"
+            to={"/finance/make-report"}
           >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="m1 1 4 4 4-4"
-            />
-          </svg>
-        </button>
+            Buat Laporan <AddCircleIcon />
+          </Link>
+        </div>
         {/* Dropdown menu */}
         {isDropdownOpen && (
           <div

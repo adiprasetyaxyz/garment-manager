@@ -1,10 +1,11 @@
 import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-
+import CloseIcon from "@mui/icons-material/Close";
 export default function UpdateFabricForm({
   onSubmit,
   initialData,
   setShowUpdateForm,
+  handleCloseForm,
 }) {
   const {
     register,
@@ -28,17 +29,18 @@ export default function UpdateFabricForm({
 
   return (
     <div
-      className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg mt-10 relative h-auto flex-wrap"
+      className="max-w-md mx-auto p-8   bg-white dark:bg-slate-800  border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg mt-10 relative h-auto flex-wrap "
       style={{ maxHeight: "80vh", overflowY: "auto" }}
     >
+      <button onClick={handleCloseForm} className="absolute top-2 right-2">
+        <CloseIcon className="hover:text-gray-700 " />
+      </button>
       <h2 className="text-2xl font-bold mb-6 text-center">
         Update Fabric Data
       </h2>
       <form onSubmit={handleSubmit(onSubmitHandler)}>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Fabric Type
-          </label>
+          <label className="block text-sm font-bold mb-2">Fabric Type</label>
           <input
             type="text"
             {...register("fabric_type", { required: true })}
@@ -49,9 +51,7 @@ export default function UpdateFabricForm({
           )}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Price
-          </label>
+          <label className="block text-sm font-bold mb-2">Price</label>
           <input
             type="number"
             {...register("price", { required: true })}
@@ -62,9 +62,7 @@ export default function UpdateFabricForm({
           )}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Total Quantity
-          </label>
+          <label className="block text-sm font-bold mb-2">Total Quantity</label>
           <input
             type="number"
             {...register("total_quantity", { required: true })}
@@ -75,9 +73,7 @@ export default function UpdateFabricForm({
           )}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Colors
-          </label>
+          <label className="block text-sm font-bold mb-2">Colors</label>
           {fields.map((field, index) => (
             <div key={field.id} className="mb-2 flex space-x-2">
               <input
@@ -119,7 +115,7 @@ export default function UpdateFabricForm({
         <div className="flex items-center justify-center">
           <button
             type="submit"
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Submit
           </button>

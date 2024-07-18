@@ -52,7 +52,7 @@ export default function MakeReport({
 
   return (
     <div className="relative">
-      <div className="lg:m-14 bg-white lg:p-6 rounded-md sm:m-6 sm:p-6 xs:m-3 xs:p-3">
+      <div className="rounded-md lg:m-14 sm:m-8 p-4">
         <DataForm
           productStock={productStock}
           handleSubmitReport={handleSubmit}

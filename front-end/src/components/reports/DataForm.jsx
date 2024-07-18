@@ -60,14 +60,17 @@ export default function DataForm({ productStock, handleSubmitReport }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <h2 className="text-xl font-bold">Sales</h2>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6 bg-white dark:bg-slate-800  border border-slate-200 dark:border-slate-700 rounded-md p-4"
+    >
+      <h2 className="text-xl font-bold ">Sales</h2>
       <div>
         <label>Tanggal</label>
         <input
           {...register("date")}
           type="Date"
-          className="border p-2 rounded w-full"
+          className="border p-2 rounded w-full text-gray-700"
           placeholder="Tanggal"
         />
       </div>
@@ -79,7 +82,10 @@ export default function DataForm({ productStock, handleSubmitReport }) {
               name={`sales.${index}.productName`}
               control={control}
               render={({ field }) => (
-                <select {...field} className="border p-2 rounded w-full">
+                <select
+                  {...field}
+                  className="border p-2 rounded w-full text-gray-700"
+                >
                   <option value="">Select a product</option>
                   {productNameArr.map((option) => (
                     <option key={option} value={option}>
@@ -156,7 +162,7 @@ export default function DataForm({ productStock, handleSubmitReport }) {
       <button
         type="button"
         onClick={() => reset()}
-        className="bg-gray-500 text-white p-2 rounded"
+        className="bg-gray-500 text-white p-2 rounded m-2"
       >
         Reset
       </button>
