@@ -10,10 +10,11 @@ import FabricStock from "./pages/FabricStock";
 import Finance from "./pages/Finance";
 import MakeReport from "./pages/MakeReport";
 import { useEffect, useState } from "react";
-import Succes from "./components/notification/Success";
+
 import Danger from "./components/notification/Danger";
 import ReportDetail from "./pages/ReportDetail";
 import ErrorPage from "./pages/ErrorPage";
+import Success from "./components/notification/Success.jsx";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -115,7 +116,7 @@ function App() {
     <div className="App  bg-[#EDEDED] dark:bg-[#202532]">
       {showNotification && (
         <div className="absolute top-20 right-7 z-50 animate-slide-in">
-          <Succes message={message} />
+          <Success message={message} />
         </div>
       )}
       {showDangerNotification && (
