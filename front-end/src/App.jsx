@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import Danger from "./components/notification/Danger";
 import ReportDetail from "./pages/ReportDetail";
 import ErrorPage from "./pages/ErrorPage";
-import Success from "./components/notification/Success.jsx";
+import Success from "./components/notification/Success";
 
 function App() {
   const [message, setMessage] = useState("");
