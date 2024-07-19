@@ -12,6 +12,11 @@ Garment Manager is an application designed to help manage the fashion industry w
 
 You can access the project repository [here](https://github.com/adiprasetyaxyz/garment-manager.git).
 
+## Username & Password
+
+Username : admin
+password : admin
+
 ## Folder Structure
 
 - **Front-end**: `front-end`
@@ -47,33 +52,12 @@ Clone the project repository using the following command:
 git clone https://github.com/adiprasetyaxyz/garment-manager.git
 ```
 
-### 2. Front-end Installation
-
-Navigate to the front-end folder:
-
-```bash
-cd front-end
-```
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Run the front-end application:
-
-```bash
-npm run dev
-```
-
-The front-end application will run at http://localhost:3000 (or another configured port).
-
-### 3. Back-end Installation
+### 2. Back-end Installation
 
 Navigate to the back-end folder:
 
 ```bash
+cd garment-manager
 cd back-end
 ```
 
@@ -89,7 +73,34 @@ Run the back-end application:
 npm run dev
 ```
 
-The back-end application will run at http://localhost:5000 (or another configured port).
+The back-end application will run at http://localhost:3000 (or another configured port).
+
+### 3. Front-end Installation
+
+Navigate to the front-end folder:
+
+```bash
+cd garment-manager
+cd front-end
+```
+
+Change API URL to Back-end URL:
+open src/script/config.js
+change URL to : http://localhost:3000 (or another configured port)
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the front-end application:
+
+```bash
+npm run dev
+```
+
+The front-end application will run at http://localhost:5173 (or another configured port).
 
 ## Contributing
 
