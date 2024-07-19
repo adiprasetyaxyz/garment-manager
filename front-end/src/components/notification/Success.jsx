@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Succes({ message }) {
+export default function Success({ message }) {
   return (
     <div
       id="toast-success"
