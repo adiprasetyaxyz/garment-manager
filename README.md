@@ -45,42 +45,52 @@ Clone the project repository using the following command:
 
 ```bash
 git clone https://github.com/adiprasetyaxyz/garment-manager.git
+```
 
-2. Front-end Installation
+### 2. Front-end Installation
+
 Navigate to the front-end folder:
 
-bash
-
+```bash
 cd front-end
+```
+
 Install dependencies:
 
-bash
+```bash
 npm install
+```
+
 Run the front-end application:
 
-bash
-
+```bash
 npm run dev
+```
+
 The front-end application will run at http://localhost:3000 (or another configured port).
 
-3. Back-end Installation
+### 3. Back-end Installation
+
 Navigate to the back-end folder:
 
-bash
-
+```bash
 cd back-end
+```
+
 Install dependencies:
 
-bash
-
+```bash
 npm install
+```
+
 Run the back-end application:
 
-bash
-
+```bash
 npm run dev
+```
+
 The back-end application will run at http://localhost:5000 (or another configured port).
 
-Contributing
+## Contributing
+
 If you would like to contribute to this project, please fork the repository and submit a pull request with your changes. Make sure to follow the contribution guidelines.
-```
