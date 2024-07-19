@@ -1,5 +1,5 @@
 const CONFIG = {
-  URL: "http://localhost:3000/api",
+  URL: "https://garment-managers.adaptable.app/api",
 };
-//https://garment-managers.adaptable.app/api
+
 export default CONFIG;
