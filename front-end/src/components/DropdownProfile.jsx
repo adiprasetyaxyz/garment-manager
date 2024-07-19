@@ -4,7 +4,7 @@ import Transition from "../utils/Transition";
 
 import UserAvatar from "../images/user-avatar-32.png";
 
-function DropdownProfile({ align }) {
+function DropdownProfile({ align, setLogin }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef(null);
@@ -101,13 +101,12 @@ function DropdownProfile({ align }) {
               </Link>
             </li>
             <li>
-              <Link
+              <button
                 className="font-medium text-sm text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center py-1 px-3"
-                to="/signin"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
+                onClick={() => setLogin(false)}
               >
                 Sign Out
-              </Link>
+              </button>
             </li>
           </ul>
         </div>

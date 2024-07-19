@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import CONFIG from "../script/config";
 import FabricForm from "../components/materials/FabricForm";
-import FabricStockItem from "../components/materials/FabricStockItem";
 
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import FabricStockItem from "../components/materials/FabricStockItem";
 
 export default function FabricStock({
   setMessage,

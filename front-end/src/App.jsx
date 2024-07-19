@@ -40,7 +40,11 @@ function App() {
     {
       path: "/",
       element: (
-        <MainLayout>
+        <MainLayout
+          setMessage={setMessage}
+          setShowNotification={setShowNotification}
+          setShowDangerNotification={setShowDangerNotification}
+        >
           <Dashboard />
         </MainLayout>
       ),
